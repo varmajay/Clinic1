@@ -1,0 +1,128 @@
+{% extends 'header-pat.html'%}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+  <!-- BEGIN : Main Content-->
+  <div class="main-content">
+    <div class="content-wrapper">
+      <!-- Form actions layout section start -->
+      <section id="form-action-layouts">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="content-header"> Appoinment Booking </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title" id="from-actions-top-bottom-left">Book your Appoinment </h4>
+              </div>
+              <div class="card-body">
+                <div class="px-3">
+                  <form class="form" action="" method="post">
+                    {% csrf_token %}
+                    <div class="form-body">
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput5">Select Doctor: </label>
+                          <select id="doc" name="doctor" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                            data-placement="top" data-title="Priority" required>
+                            <option value="">--------------------------SELECT----------------------------</option>
+                            {% for data in uid %}
+                            <option value="{{data.id}}">{{data.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-8 mb-2">
+                          <label for="timesheetinput3">Date</label>
+                          <div class="position-relative has-icon-left">
+                            <input type="date" id="date_picker" class="form-control" name="date" value="" required>
+                            <div class="form-control-position">
+                              <i class="ft-message-square"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="form-group col-8 mb-2">
+                          <label for="issueinput6">Start Time: </label>
+                          <div class="position-relative has-icon-left">
+                            <input type="time" id="mon_starttime" class="form-control" name="start_time" min="09:00" max="18:00" required >
+                            <div class="form-control-position">
+                              <i class="ft-clock"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-8 mb-2">
+                          <label for="issueinput6">End Time: </label>
+                          <div class="position-relative has-icon-left">
+                            <input type="time" id="mon_endtime" class="form-control" name="end_time" min="09:00" max="18:00" required>
+                            <div class="form-control-position">
+                              <i class="ft-clock"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="form-group col-12 mb-2">
+                          <label for="issueinput5">Description: </label><br>
+                          <textarea name="description" id="" cols="58" rows="5"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-actions center">
+                        <button type="submit" class="btn btn-raised btn-success">
+                          <i class="fa fa-check-square-o"></i> Book
+                        </button>
+                      </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </section>
+      
+      <!-- // Form actions layout section end -->
+
+    </div>
+  </div>
+{% if msg %}
+    <script>alert("{{msg}}")</script>
+{% endif %}
+  <!-- END : End Main Content-->
+  <script src="jquery-3.6.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script language="javascript">
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#date_picker').attr('min', today);
+  </script>
+<!-- <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({
+    beforeShowDay: function(date){    
+        return [(jQuery.datepicker.formatDate('DD', date)!='Sunday')];
+                                  }
+            });
+  } );
+</script> -->
+  {% endblock %}

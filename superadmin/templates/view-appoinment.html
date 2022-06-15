@@ -1,0 +1,143 @@
+ 
+{% extends 'header-doc.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  table {
+  counter-reset: 0;
+}
+
+table tr {
+  counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+</style>
+
+
+      <div class="main-panel">
+        <!-- BEGIN : Main Content-->
+        <div class="main-content">
+          <div class="content-wrapper"><div class="row">
+  <div class="col-12">
+    <div class="content-header">Appoinment</div>
+  </div>
+</div>
+
+<!--Striped rows Inverse Starts-->
+<section id="striped-inverse">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">View Appoinment</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>NO</th>
+                  <th>Patient Name</th>
+                  <th>Date</th>
+                  <th>Start Time </th>
+                  <th>End Time </th>
+                  <th>Description</th>
+                  <th>Action</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {% for app in uid %}
+                  <td></td>
+
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.patient.name}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.patient.name}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.patient.name}}</td>
+                  {% endif %}
+
+
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.date}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.date}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.date}}</td>
+                  {% endif %}
+  
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.start_time}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.start_time}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.start_time}}</td>
+                  {% endif %}
+
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.end_time}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.end_time}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.end_time}}</td>
+                  {% endif %}
+
+                  {% if app.date > now %}
+                  <td style="color: blue">{{app.description}}</td>
+                  {% elif app.date < now %}
+                  <td style="color: gray">{{app.description}}</td>
+                  {% elif app.date == now %} 
+                  <td style="color: green">{{app.description}}</td>
+                  {% endif %}
+                  <td>
+                    <div class="btn-group mr-1 mb-1">
+                      <button type="button" class="btn btn-raised btn-primary btn-min-width dropdown-toggle"
+                        data-toggle="dropdown" >Action</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'status-complete' app.id %}" style="color: green;">Completed</a>
+                        <a class="dropdown-item" href="{% url 'status-absent' app.id %}" style="color:red">Absent</a>
+                        <a class="dropdown-item" href="{% url 'status-cancelled' app.id %}" style="color: red;">Canceled</a>
+                    </div>
+                  </td>
+                  {% if app.status == 0 %}
+                  <td>
+                    <a class="btn white btn-round btn-primary">Pending</a>
+                  </td>
+                  {% elif app.status == 1 %}
+                  <td>
+                    <a class="btn white btn-round btn-success">Completed</a>
+                  </td>
+                  {% elif app.status == 2 %}
+                  <td>
+                    <a class="btn white btn-round btn-danger">Absent</a>
+                  </td>
+                  {% elif app.status == 3 %}
+                  <td>
+                    <a class="btn white btn-round btn-danger">Cancelled</a>
+                  </td>
+                  {% endif %}
+                </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Striped rows Inverse Ends-->
+          </div>
+        </div>
+       <br>
+
+        <!-- END : End Main Content-->
+{% endblock %}
